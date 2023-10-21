@@ -195,6 +195,7 @@
           case 0: // 情境 1
             if (answer === "A") {
               enneagramCounts[0] += 1; // Enneagram 1
+              enneagramCounts[7] += 1; // Enneagram 8
             } else if (answer === "B") {
               enneagramCounts[6] += 1; // Enneagram 7
             }
@@ -204,15 +205,14 @@
               enneagramCounts[1] += 1; // Enneagram 2
             } else if (answer === "B") {
               enneagramCounts[2] += 1; // Enneagram 3
-              enneagramCounts[7] += 1; // Enneagram 8
             }
             break;
           case 2: // 情境 3
             if (answer === "A") {
               enneagramCounts[3] += 1; // Enneagram 4
-              enneagramCounts[6] += 1; // Enneagram 7
-            } else if (answer === "B") {
               enneagramCounts[5] += 1; // Enneagram 6
+            } else if (answer === "B") {
+
               enneagramCounts[8] += 1; // Enneagram 9
             }
             break;
@@ -236,18 +236,17 @@
           case 5: // 情境 6
             if (answer === "A") {
               enneagramCounts[3] += 1; // Enneagram 4
-              enneagramCounts[6] += 1; // Enneagram 7
-            } else if (answer === "B") {
               enneagramCounts[5] += 1; // Enneagram 6
+            } else if (answer === "B") {
               enneagramCounts[7] += 1; // Enneagram 8
             }
             break;
           case 6: // 情境 7
             if (answer === "A") {
-              enneagramCounts[5] += 1; // Enneagram 6
               enneagramCounts[0] += 1; // Enneagram 1
+              enneagramCounts[6] += 1; // Enneagram 7             
             } else if (answer === "B") {
-              enneagramCounts[6] += 1; // Enneagram 7
+              enneagramCounts[7] += 1; // Enneagram 8
             }
             break;
           case 7: // 情境 8
@@ -256,15 +255,15 @@
               enneagramCounts[8] += 1; // Enneagram 9
             } else if (answer === "B") {
               enneagramCounts[2] += 1; // Enneagram 3
-              enneagramCounts[7] += 1; // Enneagram 8
             }
             break;
           case 8: // 情境 9
             if (answer === "A") {
               enneagramCounts[6] += 1; // Enneagram 7
-            } else if (answer === "B") {
               enneagramCounts[5] += 1; // Enneagram 6
+            } else if (answer === "B") {
               enneagramCounts[0] += 1; // Enneagram 1
+              enneagramCounts[2] += 1; // Enneagram 3
             }
             break;
           case 9: // 情境 10
@@ -272,7 +271,6 @@
               enneagramCounts[3] += 1; // Enneagram 4
               enneagramCounts[4] += 1; // Enneagram 5
             } else if (answer === "B") {
-              enneagramCounts[5] += 1; // Enneagram 6
               enneagramCounts[8] += 1; // Enneagram 9
             }
             break;
