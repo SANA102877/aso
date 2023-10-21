@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>9型人種測驗</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 32px;
+    }
+
+    p {
+      font-size: 18px;
+    }
+
+    #startButton,
+    #optionA,
+    #optionB {
+      background-color: #333;
+      color: #fff;
+      font-size: 18px;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+
+    #startButton:hover,
+    #optionA:hover,
+    #optionB:hover {
+      background-color: #555;
+    }
+
+    #questionContainer,
+    #resultContainer {
+      display: none;
+    }
+
+    #questionContainer p {
+      font-weight: bold;
+    }
+
+    #resultContainer {
+      font-size: 24px;
+      color: #D2E9FF;
+      /* 淺藍色 */
+    }
+
+    #resultContainer p:first-child {
+      font-size: 28px;
+      /* 更大的文字 */
+      font-weight: bold;
+      /* 粗體 */
+    }
+
+    #productLink {
+      font-size: 35px;
+      font-weight: bold;
+      /* 粗體 */
+    }
+  </style>
+</head>
+
+<body>
+  <h1>9型人種測驗</h1>
+  <p>您受命搭乘星船前往一顆陌生而危險的星球進行探險，做出選擇，努力實現生命的最大價值。</p>
+  <button id="startButton" onclick="startTest()">開始</button>
+
+  <div id="questionContainer">
+    <p id="questionText"></p>
+    <button id="optionA" onclick="nextQuestion('A')">選項 A</button>
+    <button id="optionB" onclick="nextQuestion('B')">選項 B</button>
+  </div>
+
+  <div id="resultContainer">
+    <p id="resultText"></p>
+    <p><a id="productLink" href="https://www.kadokado.com.tw/book/22248">前往《黑灰白》</a></p>
+  </div>
+  <script>
+    const questions = [
+      "情境 1：順利登入行星後，您發現一個通往星球深處的入口，但入口上有一個複雜的鎖……",
+      "情境 2：您遇到了一個友好的外星居民，他們邀請您參加一個當地的儀式，但參加可能會干擾您的探險計劃……",
+      "情境 3：您在行星的某個地區發現了一個神秘的建築，似乎蘊含著星球的歷史和智慧。但該建築充滿危險，進入可能會帶來風險……",
+      "情境 4：您的星船忽然遭受了嚴重的損壞，而您的通訊設備也受損。您不知道地面組的其他組員是否安全……",
+      "情境 5：您在行星的一片丘陵低處發現了一種未知的植物，它可能對醫學研究非常有價值。然而，收集植物可能會對當地生態系統造成損害……",
+      "情境 6：入夜，您聽到了一個奇怪的聲音，似乎有生物在附近……",
+      "情境 7：您的氧氣供應變得不足，您還有兩個選擇：返回星船補充氧氣，或繼續探險，但風險可能增加……",
+      "情境 8：您在行星的洞穴裡遇到了名為顎蟻的本地生物，牠們對您表現出攻擊性……",
+      "情境 9：您在探險中迷路了，但您發現了一個神秘的地下通道，似乎通向某個未知的地方……",
+      "情境 10：您發現一個奇怪的發光物體，但靠近它可能有危險……"
+    ];
+    const questionOptions = [
+      ["花時間仔細研究鎖，試圖找到打開它的方法", "擇繼續前進，不想浪費時間在這個入口上"],
+      ["欣然接受邀請，認為文化體驗比探險更重要", "婉拒邀請，專注於您的探險計劃"],
+      ["冒險進入建築，認為其中的知識可能對任務非常重要", "選擇不冒險進入，認為安全更重要"],
+      ["嘗試修理通訊設備，希望聯繫其他組員", "決定優先保護自己，確保自己的安全"],
+      ["選擇收集植物，因為科學研究對新人類很有價值。", "選擇保護生態系統，不願犧牲星球的生態環境"],
+      ["前往聲音的來源處，您對探索未知的好奇心驅使著您", "保持警惕，但選擇留在原地，以確保自己的安全"],
+      ["返回太空船補充氧氣，不願冒險", "決定繼續探險，希望找到有用的資源"],
+      ["嘗試與顎蟻和平共存，找到一個不傷害牠們的方法", "防禦自己，不讓顎蟻威脅到您"],
+      ["進入地下通道，追求未知的奇遇", "決定不冒險，繼續尋找回去的路"],
+      ["靠近發光物體，希望發現它的奧秘", "保持謹慎，不靠近可能危險的物體"]
+    ];
+    const results = [{
+        type: "Enneagram 1 - 完美主義者 (K10 - 白鈉)",
+        characteristics: "完美主義者傾向於追求道德和倫理的完美，對自己和他人要求嚴格。他們是出色的領導者，有良好的道德價值觀。",
+        traits: "自律、忠誠、負責任、認真、理想主義"
+      },
+      {
+        type: "Enneagram 2 - 助人者 (K30 - 灰氦)",
+        characteristics: "助人者關心他人，傾向於滿足他人的需求，以獲得認可和愛。他們是出色的團隊成員和社交者。",
+        traits: "關懷、慷慨、友善、社交、樂於助人"
+      },
+      {
+        type: "Enneagram 3 - 觀察者 (K40 - 灰氦)",
+        characteristics: "觀察者追求知識和理解，傾向於保持內向，研究和分析事物。他們是出色的問題解決者。",
+        traits: "獨立、冷靜、分析、理性、專注"
+      },
+      {
+        type: "Enneagram 4 - 藝術家 (K50 - 灰氦)",
+        characteristics: "藝術家傾向於追求獨特性和表現自我，對情感和美感敏感。他們是創意的和深刻的思想家。",
+        traits: "創意、情感豐富、深思熟慮、獨立、獨特"
+      },
+      {
+        type: "Enneagram 5 - 忠誠者 (K60 - 灰氦)",
+        characteristics: "忠誠者注重安全和支持，傾向於擔憂和焦慮。他們是出色的團隊成員和忠實的朋友。",
+        traits: "忠誠、警覺、負責、謹慎、擔憂"
+      },
+      {
+        type: "Enneagram 6 - 成就者 (K70 - 灰氦)",
+        characteristics: "成就者追求成功、成就和卓越。他們是出色的目標設定者，常常具有高度的競爭性。",
+        traits: "野心、自信、積極、實現導向、自我意識"
+      },
+      {
+        type: "Enneagram 7 - 樂天派 (K80 - 灰氦)",
+        characteristics: "樂天派傾向於享受樂趣、冒險和新奇事物，對生活充滿熱情。他們是出色的冒險家和樂觀主義者。",
+        traits: "樂觀、冒險、多才多藝、尋求樂趣、自由愛好者"
+      },
+      {
+        type: "Enneagram 8 - 挑戰者 (K90 - 灰氦)",
+        characteristics: "挑戰者追求支配和控制，傾向於堅強和果斷。他們是出色的領袖和解決問題者。",
+        traits: "自信、果斷、堅韌、直言不諱、具支配力"
+      },
+      {
+        type: "Enneagram 9 - 和平主義者 (K100 - 黑烯)",
+        characteristics: "和平主義者傾向於保持內在平靜和和諧，優先考慮他人的需求。他們是出色的調解者和和平維持者。",
+        traits: "和諧、和平主義、包容、擔負、穩定"
+      }
+    ];
+    const questionText = document.getElementById("questionText");
+    const optionA = document.getElementById("optionA");
+    const optionB = document.getElementById("optionB");
+    const startButton = document.getElementById("startButton");
+    const questionContainer = document.getElementById("questionContainer");
+    const resultContainer = document.getElementById("resultContainer");
+    let currentQuestion = 0;
+    const answers = [];
+
+    function startTest() {
+      startButton.style.display = "none";
+      questionContainer.style.display = "block";
+      showNextQuestion();
+    }
+
+    function showNextQuestion() {
+      if (currentQuestion < questions.length) {
+        questionText.innerText = questions[currentQuestion];
+        optionA.innerText = "A. " + questionOptions[currentQuestion][0];
+        optionB.innerText = "B. " + questionOptions[currentQuestion][1];
+        currentQuestion++;
+      } else {
+        showResult();
+      }
+    }
+
+    function nextQuestion(answer) {
+      answers.push(answer);
+      showNextQuestion();
+    }
+
+    function calculateResult() {
+      const enneagramCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0]; // 初始化Enneagram類型的計數器
+      for (let i = 0; i < answers.length; i++) {
+        const answer = answers[i];
+        // 根據每個答案選項，更新相應的Enneagram計數
+        switch (i) {
+          case 0: // 情境 1
+            if (answer === "A") {
+              enneagramCounts[0] += 1; // Enneagram 1
+            } else if (answer === "B") {
+              enneagramCounts[6] += 1; // Enneagram 7
+            }
+            break;
+          case 1: // 情境 2
+            if (answer === "A") {
+              enneagramCounts[1] += 1; // Enneagram 2
+            } else if (answer === "B") {
+              enneagramCounts[2] += 1; // Enneagram 3
+              enneagramCounts[7] += 1; // Enneagram 8
+            }
+            break;
+          case 2: // 情境 3
+            if (answer === "A") {
+              enneagramCounts[3] += 1; // Enneagram 4
+              enneagramCounts[6] += 1; // Enneagram 7
+            } else if (answer === "B") {
+              enneagramCounts[5] += 1; // Enneagram 6
+              enneagramCounts[8] += 1; // Enneagram 9
+            }
+            break;
+          case 3: // 情境 4
+            if (answer === "A") {
+              enneagramCounts[0] += 1; // Enneagram 1
+              enneagramCounts[4] += 1; // Enneagram 5
+            } else if (answer === "B") {
+              enneagramCounts[2] += 1; // Enneagram 3
+              enneagramCounts[7] += 1; // Enneagram 8
+            }
+            break;
+          case 4: // 情境 5
+            if (answer === "A") {
+              enneagramCounts[4] += 1; // Enneagram 5
+            } else if (answer === "B") {
+              enneagramCounts[1] += 1; // Enneagram 2
+              enneagramCounts[8] += 1; // Enneagram 9
+            }
+            break;
+          case 5: // 情境 6
+            if (answer === "A") {
+              enneagramCounts[3] += 1; // Enneagram 4
+              enneagramCounts[6] += 1; // Enneagram 7
+            } else if (answer === "B") {
+              enneagramCounts[5] += 1; // Enneagram 6
+              enneagramCounts[7] += 1; // Enneagram 8
+            }
+            break;
+          case 6: // 情境 7
+            if (answer === "A") {
+              enneagramCounts[5] += 1; // Enneagram 6
+              enneagramCounts[0] += 1; // Enneagram 1
+            } else if (answer === "B") {
+              enneagramCounts[6] += 1; // Enneagram 7
+            }
+            break;
+          case 7: // 情境 8
+            if (answer === "A") {
+              enneagramCounts[1] += 1; // Enneagram 2
+              enneagramCounts[8] += 1; // Enneagram 9
+            } else if (answer === "B") {
+              enneagramCounts[2] += 1; // Enneagram 3
+              enneagramCounts[7] += 1; // Enneagram 8
+            }
+            break;
+          case 8: // 情境 9
+            if (answer === "A") {
+              enneagramCounts[6] += 1; // Enneagram 7
+            } else if (answer === "B") {
+              enneagramCounts[5] += 1; // Enneagram 6
+              enneagramCounts[0] += 1; // Enneagram 1
+            }
+            break;
+          case 9: // 情境 10
+            if (answer === "A") {
+              enneagramCounts[3] += 1; // Enneagram 4
+              enneagramCounts[4] += 1; // Enneagram 5
+            } else if (answer === "B") {
+              enneagramCounts[5] += 1; // Enneagram 6
+              enneagramCounts[8] += 1; // Enneagram 9
+            }
+            break;
+        }
+      }
+      // 找到最大值的Enneagram類型
+      let maxCount = -1;
+      let maxIndex = -1;
+      for (let i = 0; i < enneagramCounts.length; i++) {
+        if (enneagramCounts[i] > maxCount) {
+          maxCount = enneagramCounts[i];
+          maxIndex = i;
+        }
+      }
+      return results[maxIndex];
+    }
+
+    function showResult() {
+      questionContainer.style.display = "none";
+      const result = calculateResult();
+      resultContainer.style.display = "block";
+      resultText.innerHTML = `<p>${result.type}</p><p>${result.characteristics}</p><p>${result.traits}</p>`;
+    }
+  </script>
+</body>
+
+</html>
