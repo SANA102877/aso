@@ -22,7 +22,7 @@
     #startButton,
     #optionA,
     #optionB,
-    #goto{
+    #goto {
       background-color: #333;
       color: #fff;
       font-size: 35px;
@@ -37,6 +37,7 @@
     #goto:hover {
       background-color: #555;
       font-size: 35px;
+      padding: 10px 20px;
     }
 
     #questionContainer,
@@ -48,11 +49,12 @@
     #questionContainer p {
       font-weight: bold;
       font-size: 35px;
+      color: #E9CD72
     }
 
     #resultContainer {
       font-size: 35px;
-      color: #D2E9FF;
+      color: #9FDDFF;
       /* 淺藍色 */
     }
 
@@ -85,7 +87,7 @@
   <div id="resultContainer">
     <p id="resultText"></p>
     <button id="goto" onclick="window.location.href='https://www.kadokado.com.tw/book/22248'">前往《黑灰白》</button>
-    <figure><img src="BlackGrayWhite.jpg" alt="黑灰白" style="width: 50%;"></figure>	
+    <figure><img src="BlackGrayWhite.jpg" alt="黑灰白" style="width: 50%;"></figure>
   </div>
   <script>
     const questions = [
@@ -198,7 +200,7 @@
           case 0: // 情境 1
             if (answer === "A") {
               enneagramCounts[0] += 1; // Enneagram 1
-              enneagramCounts[7] += 1; // Enneagram 8
+              enneagramCounts[3] += 1; // Enneagram 4
             } else if (answer === "B") {
               enneagramCounts[6] += 1; // Enneagram 7
             }
@@ -206,6 +208,7 @@
           case 1: // 情境 2
             if (answer === "A") {
               enneagramCounts[1] += 1; // Enneagram 2
+              enneagramCounts[6] += 1; // Enneagram 7
             } else if (answer === "B") {
               enneagramCounts[2] += 1; // Enneagram 3
             }
@@ -215,7 +218,6 @@
               enneagramCounts[3] += 1; // Enneagram 4
               enneagramCounts[5] += 1; // Enneagram 6
             } else if (answer === "B") {
-
               enneagramCounts[8] += 1; // Enneagram 9
             }
             break;
